@@ -18,7 +18,7 @@ Once inside the container, connect to PostgreSQL:
 
 ```bash
 # Connect to a specific database with a user
-psql -U aether -d example_db
+psql -U user -d example_db
 # You will be prompted for the password you set in your .env file.
 ```
 
@@ -145,7 +145,77 @@ INSERT INTO posts (user_id, title) VALUES (1, 'My first post!');
   LEFT JOIN posts ON users.id = posts.user_id;
   ```
 
-## 7. Common PostgreSQL Data Types
+## 7. Aggregation and Sorting
+
+These commands are fundamental for analyzing and organizing data.
+
+Let's create a `products` table for these examples.
+```sql
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    category VARCHAR(50),
+    price NUMERIC(10, 2)
+);
+
+INSERT INTO products (name, category, price) VALUES
+('Laptop', 'Electronics', 1200.00),
+('Mouse', 'Electronics', 25.00),
+('Keyboard', 'Electronics', 75.00),
+('T-Shirt', 'Apparel', 15.00),
+('Jeans', 'Apparel', 50.00);
+```
+
+### Aggregate Functions
+- `COUNT()`: Counts the number of rows.
+  ```sql
+  SELECT COUNT(*) FROM products;
+  ```
+- `SUM()`: Calculates the sum of a set of values.
+  ```sql
+  SELECT SUM(price) FROM products WHERE category = 'Electronics';
+  ```
+- `AVG()`: Calculates the average value.
+  ```sql
+  SELECT AVG(price) FROM products;
+  ```
+- `MAX()` / `MIN()`: Gets the maximum/minimum value.
+  ```sql
+  SELECT MAX(price) AS highest_price, MIN(price) AS lowest_price FROM products;
+  ```
+
+### `GROUP BY`
+Groups rows that have the same values into summary rows. It's often used with aggregate functions.
+```sql
+-- Count the number of products in each category
+SELECT category, COUNT(*) AS product_count
+FROM products
+GROUP BY category;
+
+-- Get the average price for each category
+SELECT category, AVG(price) AS average_price
+FROM products
+GROUP BY category;
+```
+
+### `ORDER BY`
+Sorts the result set in ascending (`ASC`) or descending (`DESC`) order.
+```sql
+-- Sort products by price, from lowest to highest
+SELECT * FROM products ORDER BY price ASC;
+
+-- Sort products by price, from highest to lowest
+SELECT * FROM products ORDER BY price DESC;
+```
+
+### `LIMIT`
+Constrains the number of rows returned by a query.
+```sql
+-- Get the top 3 most expensive products
+SELECT * FROM products ORDER BY price DESC LIMIT 3;
+```
+
+## 8. Common PostgreSQL Data Types
 
 ### Numeric Types
 - `INTEGER` (or `INT`): Standard integer.
@@ -174,7 +244,7 @@ INSERT INTO posts (user_id, title) VALUES (1, 'My first post!');
 - `JSON`, `JSONB`: Stores JSON data. `JSONB` is stored in a decomposed binary format which is faster to process but slightly slower to input. It also supports indexing. `JSONB` is generally recommended.
 - `ARRAY`: Allows a column to store an array of values, e.g., `TEXT[]` or `INT[]`.
 
-## 8. Indexing
+## 9. Indexing
 
 Indexes are used to speed up the performance of queries. They are crucial for optimizing data retrieval on large tables.
 
@@ -184,7 +254,7 @@ Indexes are used to speed up the performance of queries. They are crucial for op
   ```
 
 - **Check for indexes on a table:**
-  Use the `psql` meta-command:
+  Use the `psql` meta-commands:
   ```
   \d users
   ```
@@ -194,7 +264,7 @@ Indexes are used to speed up the performance of queries. They are crucial for op
   DROP INDEX idx_users_username;
   ```
 
-## 9. Transactions
+## 10. Transactions
 
 PostgreSQL treats every SQL statement as being executed within a transaction. `BEGIN` and `COMMIT` are used to group multiple statements into a single transaction.
 
@@ -219,7 +289,7 @@ PostgreSQL treats every SQL statement as being executed within a transaction. `B
   ROLLBACK;
   ```
 
-## 10. User and Role Management
+## 11. User and Role Management
 
 PostgreSQL manages users as "roles". A role can be a user or a group.
 
