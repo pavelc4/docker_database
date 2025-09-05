@@ -19,7 +19,7 @@ Once inside the container, connect to PostgreSQL:
 ```bash
 # Connect to a specific database with a user
 psql -U aether -d example_db
-# You will be prompted for the password (1945)
+# You will be prompted for the password you set in your .env file.
 ```
 
 ## 2. `psql` Meta-Commands

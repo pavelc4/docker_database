@@ -12,7 +12,7 @@ This command will create a `backup.tar` file in your current directory on the ho
 # Command format:
 # docker exec -t [container_name] pg_dump -U [user] -d [database_name] -F t > [backup_file.tar]
 
-docker exec -t postgres_container pg_dump -U aether -d example_db -F t > backup.tar
+docker exec -t postgres_container pg_dump -U ${POSTGRES_USER} -d ${POSTGRES_DB} -F t > backup.tar
 ```
 
 - `-F t` specifies the format as a tar archive.
@@ -22,7 +22,7 @@ docker exec -t postgres_container pg_dump -U aether -d example_db -F t > backup.
 If you prefer a plain `.sql` file:
 
 ```bash
-docker exec -t postgres_container pg_dump -U aether -d example_db > backup.sql
+docker exec -t postgres_container pg_dump -U ${POSTGRES_USER} -d ${POSTGRES_DB} > backup.sql
 ```
 
 ## 2. Restore a Database
@@ -37,7 +37,7 @@ You can pipe the `.sql` file directly into the `psql` client.
 # Command format:
 # docker exec -i [container_name] psql -U [user] -d [database_name] < [backup_file.sql]
 
-cat backup.sql | docker exec -i postgres_container psql -U aether -d example_db
+cat backup.sql | docker exec -i postgres_container psql -U ${POSTGRES_USER} -d ${POSTGRES_DB}
 ```
 
 ### Restoring from a `.tar` Archive File
@@ -51,5 +51,5 @@ docker cp backup.tar postgres_container:/tmp/backup.tar
 # 2. Execute pg_restore inside the container
 # The --create flag will re-create the database before restoring.
 # The -d postgres is used to connect to the maintenance db to perform the create.
-docker exec -it postgres_container pg_restore -U aether -d postgres --create --verbose /tmp/backup.tar
+docker exec -it postgres_container pg_restore -U ${POSTGRES_USER} -d postgres --create --verbose /tmp/backup.tar
 ```

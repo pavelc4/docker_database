@@ -12,7 +12,7 @@ This command will create a `backup.sql` file in your current directory on the ho
 # Command format:
 # docker exec [container_name] mysqldump -u [user] -p[password] [database_name] > [backup_file.sql]
 
-docker exec mysql_db mysqldump -u root -p1945 testing_db > backup.sql
+docker exec mysql_db mysqldump -u root -p${MYSQL_ROOT_PASSWORD} testing_db > backup.sql
 ```
 
 *Note: There is no space between `-p` and the password.*
@@ -22,7 +22,7 @@ docker exec mysql_db mysqldump -u root -p1945 testing_db > backup.sql
 To back up all databases managed by the server:
 
 ```bash
-docker exec mysql_db mysqldump -u root -p1945 --all-databases > all_databases_backup.sql
+docker exec mysql_db mysqldump -u root -p${MYSQL_ROOT_PASSWORD} --all-databases > all_databases_backup.sql
 ```
 
 ## 2. Restore a Database
@@ -35,7 +35,7 @@ First, make sure the database you are restoring to exists. If not, create it.
 # Command format:
 # docker exec -i [container_name] mysql -u [user] -p[password] [database_name] < [backup_file.sql]
 
-docker exec -i mysql_db mysql -u root -p1945 testing_db < backup.sql
+docker exec -i mysql_db mysql -u root -p${MYSQL_ROOT_PASSWORD} testing_db < backup.sql
 ```
 
 This command reads the `backup.sql` file from your host and executes it inside the `mysql_db` container.

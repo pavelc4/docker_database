@@ -19,7 +19,7 @@ Once inside the container, connect to MySQL:
 ```bash
 # Connect using the root user
 mysql -u root -p
-# You will be prompted for the password (1945)
+# You will be prompted for the password you set in your .env file.
 ```
 
 ## 2. Database Operations
