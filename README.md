@@ -62,7 +62,38 @@ Before using this project, you need Docker and Docker Compose installed on your 
 
 ---
 
-## 3. Available Databases & Guides
+## 3. Connecting with a GUI Client (Beekeeper Studio)
+
+While you can manage the database from the command line, using a GUI client is often more convenient. We recommend **Beekeeper Studio**, a free and open-source client with a modern UI.
+
+1.  **Download and Install Beekeeper Studio:**
+    - Go to the official website and download the version for your OS: [https://www.beekeeperstudio.io/](https://www.beekeeperstudio.io/)
+
+2.  **Connect to a Database:**
+    - Make sure your Docker container is running (`docker-compose up -d`).
+    - Open Beekeeper Studio and click `Import Connection` or the `+` icon to create a new connection.
+    - Use the details below, taking the values from the `.env` file in your chosen database directory (`mysql/.env` or `Postgresql/.env`).
+
+
+### MySQL Connection Details
+- **Connection Type:** `MySQL`
+- **Host:** `127.0.0.1` (or `localhost`)
+- **Port:** The `MYSQL_PORT` value from your `.env` file (default: `3306`).
+- **User:** The `MYSQL_USER` value from your `.env` file (default: `user`).
+- **Password:** The `MYSQL_PASSWORD` value from your `.env` file (default: `changeme`).
+- **Database:** The `MYSQL_DATABASE` value from your `.env` file (default: `testing_db`).
+
+### PostgreSQL Connection Details
+- **Connection Type:** `PostgreSQL`
+- **Host:** `127.0.0.1` (or `localhost`)
+- **Port:** The `POSTGRES_PORT` value from your `.env` file (default: `5432`).
+- **User:** The `POSTGRES_USER` value from your `.env` file (default: `user`).
+- **Password:** The `POSTGRES_PASSWORD` value from your `.env` file (default: `changeme`).
+- **Database:** The `POSTGRES_DB` value from your `.env` file (default: `example_db`).
+
+---
+
+## 4. Available Databases & Learning Guides
 
 - **MySQL:** See the [MySQL README](./mysql/README.md) for setup and connection details.
 - **PostgreSQL:** See the [PostgreSQL README](./Postgresql/README.md) for setup and connection details.
@@ -71,6 +102,6 @@ Each database folder contains its own `docker-compose.yml`, learning guides, and
 
 ---
 
-## 4. Security Note
+## 5. Security Note
 
 The `.env` file should not be committed to version control. This repository's `.gitignore` file is already configured to ignore `.env` files.
