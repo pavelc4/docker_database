@@ -171,3 +171,88 @@ INSERT INTO posts (user_id, title) VALUES (1, 'My first post!');
 - `TIME`: Stores a time (HH:MM:SS).
 - `DATETIME`: Stores a date and time combination (YYYY-MM-DD HH:MM:SS).
 - `TIMESTAMP`: Similar to `DATETIME` but is timezone-aware and has a smaller range. It's often used for tracking creation or modification times.
+
+## 7. Indexing
+
+Indexes are used to retrieve data from the database more quickly. They are special lookup tables that the database search engine can use to speed up data retrieval.
+
+- **Create an index on a column:**
+  ```sql
+  CREATE INDEX idx_username ON users(username);
+  ```
+
+- **Check for indexes on a table:**
+  ```sql
+  SHOW INDEX FROM users;
+  ```
+
+- **Drop an index:**
+  ```sql
+  DROP INDEX idx_username ON users;
+  ```
+
+## 8. Transactions
+
+Transactions are a sequence of operations performed as a single logical unit of work. All operations must succeed; otherwise, the entire transaction is rolled back.
+
+- **Start a transaction:**
+  ```sql
+  START TRANSACTION;
+  ```
+
+- **Example transaction:**
+  ```sql
+  -- Start the transaction
+  START TRANSACTION;
+
+  -- Perform some operations
+  INSERT INTO users (username, email) VALUES ('test_user', 'test@example.com');
+  UPDATE posts SET title = 'New Title' WHERE user_id = 1;
+
+  -- If everything is okay, commit the changes
+  COMMIT;
+  ```
+
+- **Rolling back a transaction:**
+  If something goes wrong, you can undo all changes since the transaction started.
+  ```sql
+  -- Start the transaction
+  START TRANSACTION;
+
+  -- Perform some operations
+  DELETE FROM users;
+
+  -- Something is wrong! Roll back the changes.
+  ROLLBACK;
+  ```
+
+## 9. User Management
+
+- **Create a new user:**
+  ```sql
+  CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+  ```
+
+- **Grant privileges to a user:**
+  ```sql
+  -- Grant all privileges on a specific database
+  GRANT ALL PRIVILEGES ON my_new_app.* TO 'newuser'@'localhost';
+
+  -- Grant only SELECT privilege on a specific table
+  GRANT SELECT ON my_new_app.users TO 'newuser'@'localhost';
+  ```
+
+- **Show grants for a user:**
+  ```sql
+  SHOW GRANTS FOR 'newuser'@'localhost';
+  ```
+
+- **Revoke privileges:**
+  ```sql
+  REVOKE ALL PRIVILEGES ON my_new_app.* FROM 'newuser'@'localhost';
+  ```
+
+- **Delete a user:**
+  ```sql
+  DROP USER 'newuser'@'localhost';
+  ```
