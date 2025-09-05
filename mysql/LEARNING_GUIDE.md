@@ -150,3 +150,24 @@ INSERT INTO posts (user_id, title) VALUES (1, 'My first post!');
   FROM users
   LEFT JOIN posts ON users.id = posts.user_id;
   ```
+
+## 6. Common MySQL Data Types
+
+### Numeric Types
+- `INT`: Standard integer.
+- `TINYINT`: A very small integer. Often used for booleans (`0` for false, `1` for true).
+- `BIGINT`: A large integer for very big numbers.
+- `DECIMAL(p, s)`: A fixed-point number, excellent for currency. `p` is total digits, `s` is digits after the decimal. Example: `DECIMAL(10, 2)`.
+- `FLOAT`, `DOUBLE`: Floating-point numbers for scientific calculations.
+
+### String Types
+- `VARCHAR(n)`: A variable-length string with a maximum size of `n` characters. Use this for most text fields.
+- `CHAR(n)`: A fixed-length string of `n` characters. If the input is shorter, it's padded with spaces.
+- `TEXT`: For long-form text like blog posts or descriptions.
+- `ENUM`: A string object that can have only one value, chosen from a list of allowed values specified at table creation.
+
+### Date and Time Types
+- `DATE`: Stores a date (YYYY-MM-DD).
+- `TIME`: Stores a time (HH:MM:SS).
+- `DATETIME`: Stores a date and time combination (YYYY-MM-DD HH:MM:SS).
+- `TIMESTAMP`: Similar to `DATETIME` but is timezone-aware and has a smaller range. It's often used for tracking creation or modification times.
