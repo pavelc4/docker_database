@@ -116,7 +116,7 @@ psql -U aether -d example_db
 
 ## 6. Joins
 
-Let\'s create another table to demonstrate joins.
+Let's create another table to demonstrate joins.
 
 ```sql
 CREATE TABLE posts (
@@ -145,3 +145,31 @@ INSERT INTO posts (user_id, title) VALUES (1, 'My first post!');
   LEFT JOIN posts ON users.id = posts.user_id;
   ```
 
+## 7. Common PostgreSQL Data Types
+
+### Numeric Types
+- `INTEGER` (or `INT`): Standard integer.
+- `SMALLINT`: A small-range integer.
+- `BIGINT`: A large-range integer.
+- `SERIAL`: An auto-incrementing integer, often used for primary keys. `BIGSERIAL` is also available.
+- `NUMERIC(p, s)`: A fixed-point number, ideal for currency where precision is critical. `p` is total digits, `s` is digits after the decimal.
+- `REAL`, `DOUBLE PRECISION`: Floating-point numbers.
+
+### Character Types
+- `VARCHAR(n)`: A variable-length string with a maximum size of `n` characters.
+- `CHAR(n)`: A fixed-length string of `n` characters.
+- `TEXT`: For long-form text with no predefined limit.
+
+### Date and Time Types
+- `DATE`: Stores a date (YYYY-MM-DD).
+- `TIME`: Stores a time of day (HH:MM:SS).
+- `TIMESTAMP`: Stores both date and time.
+- `TIMESTAMPTZ`: A timezone-aware timestamp. This is often the recommended choice for web applications.
+
+### Boolean Type
+- `BOOLEAN`: Stores `true` or `false` values.
+
+### Special Types
+- `UUID`: Stores a universally unique identifier.
+- `JSON`, `JSONB`: Stores JSON data. `JSONB` is stored in a decomposed binary format which is faster to process but slightly slower to input. It also supports indexing. `JSONB` is generally recommended.
+- `ARRAY`: Allows a column to store an array of values, e.g., `TEXT[]` or `INT[]`.
