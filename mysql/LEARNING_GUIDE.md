@@ -151,7 +151,77 @@ INSERT INTO posts (user_id, title) VALUES (1, 'My first post!');
   LEFT JOIN posts ON users.id = posts.user_id;
   ```
 
-## 6. Common MySQL Data Types
+## 6. Aggregation and Sorting
+
+These commands are fundamental for analyzing and organizing data.
+
+Let's create a `products` table for these examples.
+```sql
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    category VARCHAR(50),
+    price DECIMAL(10, 2)
+);
+
+INSERT INTO products (name, category, price) VALUES
+('Laptop', 'Electronics', 1200.00),
+('Mouse', 'Electronics', 25.00),
+('Keyboard', 'Electronics', 75.00),
+('T-Shirt', 'Apparel', 15.00),
+('Jeans', 'Apparel', 50.00);
+```
+
+### Aggregate Functions
+- `COUNT()`: Counts the number of rows.
+  ```sql
+  SELECT COUNT(*) FROM products;
+  ```
+- `SUM()`: Calculates the sum of a set of values.
+  ```sql
+  SELECT SUM(price) FROM products WHERE category = 'Electronics';
+  ```
+- `AVG()`: Calculates the average value.
+  ```sql
+  SELECT AVG(price) FROM products;
+  ```
+- `MAX()` / `MIN()`: Gets the maximum/minimum value.
+  ```sql
+  SELECT MAX(price) AS highest_price, MIN(price) AS lowest_price FROM products;
+  ```
+
+### `GROUP BY`
+Groups rows that have the same values into summary rows. It's often used with aggregate functions.
+```sql
+-- Count the number of products in each category
+SELECT category, COUNT(*) AS product_count
+FROM products
+GROUP BY category;
+
+-- Get the average price for each category
+SELECT category, AVG(price) AS average_price
+FROM products
+GROUP BY category;
+```
+
+### `ORDER BY`
+Sorts the result set in ascending (`ASC`) or descending (`DESC`) order.
+```sql
+-- Sort products by price, from lowest to highest
+SELECT * FROM products ORDER BY price ASC;
+
+-- Sort products by price, from highest to lowest
+SELECT * FROM products ORDER BY price DESC;
+```
+
+### `LIMIT`
+Constrains the number of rows returned by a query.
+```sql
+-- Get the top 3 most expensive products
+SELECT * FROM products ORDER BY price DESC LIMIT 3;
+```
+
+## 7. Common MySQL Data Types
 
 ### Numeric Types
 - `INT`: Standard integer.
@@ -172,7 +242,7 @@ INSERT INTO posts (user_id, title) VALUES (1, 'My first post!');
 - `DATETIME`: Stores a date and time combination (YYYY-MM-DD HH:MM:SS).
 - `TIMESTAMP`: Similar to `DATETIME` but is timezone-aware and has a smaller range. It's often used for tracking creation or modification times.
 
-## 7. Indexing
+## 8. Indexing
 
 Indexes are used to retrieve data from the database more quickly. They are special lookup tables that the database search engine can use to speed up data retrieval.
 
@@ -191,7 +261,7 @@ Indexes are used to retrieve data from the database more quickly. They are speci
   DROP INDEX idx_username ON users;
   ```
 
-## 8. Transactions
+## 9. Transactions
 
 Transactions are a sequence of operations performed as a single logical unit of work. All operations must succeed; otherwise, the entire transaction is rolled back.
 
@@ -226,7 +296,7 @@ Transactions are a sequence of operations performed as a single logical unit of 
   ROLLBACK;
   ```
 
-## 9. User Management
+## 10. User Management
 
 - **Create a new user:**
   ```sql
