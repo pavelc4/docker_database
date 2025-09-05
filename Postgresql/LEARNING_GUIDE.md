@@ -173,3 +173,86 @@ INSERT INTO posts (user_id, title) VALUES (1, 'My first post!');
 - `UUID`: Stores a universally unique identifier.
 - `JSON`, `JSONB`: Stores JSON data. `JSONB` is stored in a decomposed binary format which is faster to process but slightly slower to input. It also supports indexing. `JSONB` is generally recommended.
 - `ARRAY`: Allows a column to store an array of values, e.g., `TEXT[]` or `INT[]`.
+
+## 8. Indexing
+
+Indexes are used to speed up the performance of queries. They are crucial for optimizing data retrieval on large tables.
+
+- **Create an index on a column:**
+  ```sql
+  CREATE INDEX idx_users_username ON users (username);
+  ```
+
+- **Check for indexes on a table:**
+  Use the `psql` meta-command:
+  ```
+  \d users
+  ```
+
+- **Drop an index:**
+  ```sql
+  DROP INDEX idx_users_username;
+  ```
+
+## 9. Transactions
+
+PostgreSQL treats every SQL statement as being executed within a transaction. `BEGIN` and `COMMIT` are used to group multiple statements into a single transaction.
+
+- **Start a transaction:**
+  ```sql
+  BEGIN;
+  ```
+
+- **Example transaction:**
+  ```sql
+  BEGIN;
+  INSERT INTO users (username, email) VALUES ('test_user', 'test@example.com');
+  UPDATE posts SET title = 'New Title' WHERE user_id = 1;
+  COMMIT;
+  ```
+
+- **Rolling back a transaction:**
+  If you make a mistake, you can roll back the changes before committing.
+  ```sql
+  BEGIN;
+  DELETE FROM users;
+  ROLLBACK;
+  ```
+
+## 10. User and Role Management
+
+PostgreSQL manages users as "roles". A role can be a user or a group.
+
+- **Create a new user (role):**
+  ```sql
+  CREATE ROLE newuser WITH LOGIN PASSWORD 'password';
+  ```
+
+- **Grant privileges to a role:**
+  ```sql
+  -- Grant connect access to a database
+  GRANT CONNECT ON DATABASE my_new_app TO newuser;
+
+  -- Grant all privileges on a specific table
+  GRANT ALL ON users TO newuser;
+
+  -- Grant only SELECT on all tables in a schema
+  GRANT SELECT ON ALL TABLES IN SCHEMA public TO newuser;
+  ```
+
+- **Show grants for a user:**
+  Use `psql` meta-commands:
+  ```
+  \du newuser
+  \dp users
+  ```
+
+- **Revoke privileges:**
+  ```sql
+  REVOKE ALL ON users FROM newuser;
+  ```
+
+- **Delete a user (role):**
+  ```sql
+  DROP ROLE newuser;
+  ```
