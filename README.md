@@ -2,22 +2,37 @@
 
 This repository provides Docker Compose configurations to easily set up and run MySQL and PostgreSQL database services.
 
-## Prerequisites
+---
 
-Before you begin, ensure you have the following installed on your system:
-- [Docker](https://docs.docker.com/get-docker/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+## 1. Installation Prerequisites
 
-## Available Databases
+Before using this project, you need Docker and Docker Compose installed on your system. Docker Desktop for Windows and macOS includes Docker Compose automatically.
 
-- **MySQL:** See the [MySQL README](./mysql/README.md) for setup and connection details.
-- **PostgreSQL:** See the [PostgreSQL README](./Postgresql/README.md) for setup and connection details.
+### macOS
+- Install **Docker Desktop for Mac** by following the official guide:
+  - [https://docs.docker.com/desktop/install/mac-install/](https://docs.docker.com/desktop/install/mac-install/)
 
-Each database folder contains its own `docker-compose.yml`, learning guides, and backup instructions.
+### Windows
+- Install **Docker Desktop for Windows** by following the official guide. You will need WSL 2 (Windows Subsystem for Linux).
+  - [https://docs.docker.com/desktop/install/windows-install/](https://docs.docker.com/desktop/install/windows-install/)
+
+### Linux
+- For most Linux distributions, you will need to install the Docker Engine and then the Docker Compose plugin separately.
+
+- **1. Install Docker Engine:**
+  - **Ubuntu:** [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
+  - **Debian:** [https://docs.docker.com/engine/install/debian/](https://docs.docker.com/engine/install/debian/)
+  - **CentOS:** [https://docs.docker.com/engine/install/centos/](https://docs.docker.com/engine/install/centos/)
+  - **Fedora:** [https://docs.docker.com/engine/install/fedora/](https://docs.docker.com/engine/install/fedora/)
+  - **Arch Linux:** [https://wiki.archlinux.org/title/Docker](https://wiki.archlinux.org/title/Docker)
+
+- **2. Install Docker Compose Plugin:**
+  - Follow the official guide for installing the Compose plugin:
+    - [https://docs.docker.com/compose/install/linux/](https://docs.docker.com/compose/install/linux/)
 
 ---
 
-## How to Use
+## 2. How to Use
 
 1.  **Navigate to a database directory:**
     ```bash
@@ -26,12 +41,12 @@ Each database folder contains its own `docker-compose.yml`, learning guides, and
     ```
 
 2.  **Configure Environment Variables:**
-    Each database directory contains a `.env.example` file. Before starting the service, you must create your own `.env` file.
+    Each database directory contains a `.env.example` file. Before starting the service, you must create your own `.env` file from the example.
     ```bash
     # Copy the example file
     cp .env.example .env
     ```
-    Now, you can edit the `.env` file to change passwords, ports, or database names as needed.
+    You can now edit the `.env` file to change passwords, ports, or database names.
 
 3.  **Start the Database Service:**
     Run the following command to start the container in the background.
@@ -47,6 +62,15 @@ Each database folder contains its own `docker-compose.yml`, learning guides, and
 
 ---
 
-## Security Note
+## 3. Available Databases & Guides
+
+- **MySQL:** See the [MySQL README](./mysql/README.md) for setup and connection details.
+- **PostgreSQL:** See the [PostgreSQL README](./Postgresql/README.md) for setup and connection details.
+
+Each database folder contains its own `docker-compose.yml`, learning guides, and backup instructions.
+
+---
+
+## 4. Security Note
 
 The `.env` file should not be committed to version control. This repository's `.gitignore` file is already configured to ignore `.env` files.
